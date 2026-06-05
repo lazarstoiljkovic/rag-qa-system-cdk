@@ -1,0 +1,122 @@
+[
+  {
+    "question": "Koliko dana godišnjeg odmora imaju zaposleni?",
+    "ground_truth": "Standardna alokacija je 20 radnih dana godišnje. Zaposleni dobijaju +2 dana za svake 2 godine staža (maksimum 26 dana) i +5 dana bonus za senior pozicije kao što su Team Lead i više.",
+    "language": "sr",
+    "category": "HR"
+  },
+  {
+    "question": "Koliko unapred se podnosi zahtev za godišnji odmor?",
+    "ground_truth": "Zahtev za godišnji odmor se podnosi minimum 2 nedelje unapred i odobrava ga team lead u roku od 3 dana.",
+    "language": "sr",
+    "category": "HR"
+  },
+  {
+    "question": "Koliko sick days imaju zaposleni godišnje?",
+    "ground_truth": "Zaposleni imaju 5 sick days godišnje. Koriste se za bolest koja ne zahteva lekara, mentalno zdravlje ili hitne obaveze. Obaveza je da se obavesti Slack kanal #out-of-office ujutru.",
+    "language": "sr",
+    "category": "HR"
+  },
+  {
+    "question": "Koliko dana godišnjeg odmora može biti preneseno u sledeću godinu?",
+    "ground_truth": "Maksimum 5 dana godišnjeg odmora može biti preneseno u sledeću godinu. Svi odmori moraju biti iskorišćeni u kalendarskoj godini.",
+    "language": "sr",
+    "category": "HR"
+  },
+  {
+    "question": "Koliko traje sprint u TechSolutions?",
+    "ground_truth": "Sprint traje 2 nedelje, odnosno 10 radnih dana. Sprint počinje u ponedeljak i završava se u petak druge nedelje sa Sprint Review i Retrospective.",
+    "language": "sr",
+    "category": "Scrum"
+  },
+  {
+    "question": "Ko je odgovoran za Product Backlog?",
+    "ground_truth": "Product Owner je odgovoran za definisanje i prioritizaciju Product Backloga. Product Owner prihvata ili odbija završene storije i predstavlja interese stakeholdera.",
+    "language": "sr",
+    "category": "Scrum"
+  },
+  {
+    "question": "Koliko traje Daily Standup?",
+    "ground_truth": "Daily Standup traje tačno 15 minuta i održava se svaki dan u 10:00. Svako odgovara na tri pitanja: šta sam uradio juče, šta ću raditi danas i da li imam blocker.",
+    "language": "sr",
+    "category": "Scrum"
+  },
+  {
+    "question": "Koliko traje Sprint Planning?",
+    "ground_truth": "Sprint Planning traje 4 sata i deli se na dva dela: prvi deo 'What' traje 2 sata i bavi se odabirom storija, a drugi deo 'How' traje 2 sata i bavi se dekompozicijom na taskove.",
+    "language": "sr",
+    "category": "Scrum"
+  },
+  {
+    "question": "Koliko traje Sprint Retrospective?",
+    "ground_truth": "Sprint Retrospective traje 1.5 sat i cilj joj je poboljšanje procesa. Koristi se Start/Stop/Continue format.",
+    "language": "sr",
+    "category": "Scrum"
+  },
+  {
+    "question": "Koliko dana plaćenog odsustva postoji za smrt u porodici?",
+    "ground_truth": "Za smrt u porodici postoji 5 radnih dana plaćenog odsustva za najbližu porodicu i 3 radna dana za ostale članove porodice.",
+    "language": "sr",
+    "category": "HR"
+  },
+  {
+    "question": "What is the recommended maximum PR size?",
+    "ground_truth": "PRs should ideally be kept under 300 lines. Small PRs are under 200 lines, medium PRs are 200-500 lines, and large PRs over 500 lines should be discussed for breaking into smaller ones.",
+    "language": "en",
+    "category": "Engineering"
+  },
+  {
+    "question": "How many approvals are required for critical changes?",
+    "ground_truth": "Critical changes require 2 approvals, including the tech lead. For architectural changes, both the tech lead and architect must review. Standard changes require a minimum of 1 approval.",
+    "language": "en",
+    "category": "Engineering"
+  },
+  {
+    "question": "What is the review SLA for small PRs?",
+    "ground_truth": "Small PRs under 200 lines should be reviewed within 4 hours. Medium PRs (200-500 lines) should be reviewed within 1 day.",
+    "language": "en",
+    "category": "Engineering"
+  },
+  {
+    "question": "What automated tools are used in code review?",
+    "ground_truth": "The tools used are GitHub or GitLab for the PR interface, SonarQube for automated code analysis, ESLint and Prettier for style checking, and CI/CD pipelines for automated test execution.",
+    "language": "en",
+    "category": "Engineering"
+  },
+  {
+    "question": "What must be done before merging a PR?",
+    "ground_truth": "Before merging: all required approvals must be received, all comments must be resolved or acknowledged, the CI/CD pipeline must be green, conflicts must be resolved, and the branch must be up to date with the target branch.",
+    "language": "en",
+    "category": "Engineering"
+  },
+  {
+    "question": "What are the severity levels for incidents?",
+    "ground_truth": "There are 4 severity levels. Severity 1 (Critical): production down or data breach, affecting more than 50% of users, requires immediate response. Severity 2 (High): major feature broken, 10-50% users affected, response within 30 minutes. Severity 3 (Medium): minor feature broken, under 10% users, response within 4 hours. Severity 4 (Low): UI glitches, response next business day.",
+    "language": "en",
+    "category": "DevOps"
+  },
+  {
+    "question": "Who is the Incident Commander and what is their role?",
+    "ground_truth": "The Incident Commander is usually the most senior available engineer. They coordinate the incident response, make key decisions, and communicate with stakeholders during the incident.",
+    "language": "en",
+    "category": "DevOps"
+  },
+  {
+    "question": "What is the response time for Severity 1 incidents?",
+    "ground_truth": "Severity 1 (Critical) incidents require an immediate response. The on-call engineer must acknowledge the alert in PagerDuty, page backup on-call, alert the engineering manager, and update the status page.",
+    "language": "en",
+    "category": "DevOps"
+  },
+  {
+    "question": "What monitoring tools are used to detect incidents?",
+    "ground_truth": "Monitoring alerts come from DataDog APM, Sentry for error tracking, AWS CloudWatch, Pingdom for uptime monitoring, and user reports via support channels.",
+    "language": "en",
+    "category": "DevOps"
+  },
+  {
+    "question": "What test coverage percentage is expected?",
+    "ground_truth": "Test coverage should be above 80%. Reviewers must check that unit tests cover main scenarios and that integration tests exist for APIs.",
+    "language": "en",
+    "category": "Engineering"
+  }
+]

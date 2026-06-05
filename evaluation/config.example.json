@@ -1,0 +1,6 @@
+{
+  "opensearch_api_url": "https://REPLACE_ME.execute-api.us-east-1.amazonaws.com/prod",
+  "knowledge_base_api_url": "https://REPLACE_ME.execute-api.us-east-1.amazonaws.com/prod",
+  "aws_region": "us-east-1",
+  "aws_profile": "lazar-private"
+}
