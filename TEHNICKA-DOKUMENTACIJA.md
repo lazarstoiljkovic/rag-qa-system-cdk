@@ -745,6 +745,56 @@ Omogućava potpuno brisanje svih resursa jednom komandom `cdk destroy`. Alternat
 
 ---
 
+## 9a. Razmatrana alternativa: Self-hosted LLM na GPU instanci
+
+Pre nego što je odabran Amazon Bedrock kao upravljano rešenje za LLM inference, u fazi projektovanja arhitekture razmatrana je i alternativa sa self-hosted (samostalno hostovanim) modelom na GPU EC2 instanci. Ova alternativa nije implementirana u finalnom sistemu, ali je analizirana jer predstavlja relevantnu tačku poređenja za diskusiju o trade-offovima između upravljanih (managed) i samostalno hostovanih (self-hosted) LLM rešenja.
+
+### 9a.1 Razmatrani modeli
+
+Za self-hosting su analizirana dva open-weight modela uporedive veličine:
+
+- **Mistral 7B Instruct** — ~15 GB VRAM u FP16 preciznosti, staje na jednu `g5.xlarge` instancu (24 GB VRAM, A10G GPU)
+- **Llama 3 8B Instruct** — slična veličina, neznatno bolji kvalitet na pojedinim zadacima
+
+Razmatrana je i kvantizacija (GGUF, 4-bit/8-bit preko `bitsandbytes` ili `llama.cpp`) kao način da model stane na manju i jeftiniju instancu, uz trade-off u kvalitetu generisanih odgovora.
+
+### 9a.2 Razmatrane EC2 GPU instance
+
+| Instanca | GPU | VRAM | Cena (on-demand, ~) |
+|---|---|---|---|
+| `g4dn.xlarge` | NVIDIA T4 | 16 GB | ~$0.526/h |
+| `g5.xlarge` | NVIDIA A10G | 24 GB | ~$1.006/h |
+| `g5.2xlarge` | NVIDIA A10G | 24 GB | ~$1.212/h |
+
+### 9a.3 Model serving sloj
+
+Za produkcijski nivo serving-a (umesto ručnog pokretanja modela po zahtevu) razmatrane su tri opcije:
+
+- **vLLM** — najbrži pristup za production-like serving; podržava continuous batching i upravljanje KV cache-om; izlaže OpenAI-compatible API koji bi se lako integrisao sa Lambda/FastAPI slojem
+- **Text Generation Inference (TGI)** — alternativa iz Hugging Face ekosistema, uporedivih performansi
+- **Ollama** — najjednostavniji za setup, ali manje pogodan za production-grade demonstraciju u okviru diplomskog rada
+
+Predložena arhitektura sa self-hosted pristupom bi izgledala:
+
+```
+[Frontend] → [API Gateway] → [Lambda / FastAPI backend]
+                                     ↓
+                         [OpenSearch / pgvector] (retrieval)
+                                     ↓
+                         [vLLM server na EC2 GPU] (generation)
+```
+
+### 9a.4 Zašto je ipak odabran Amazon Bedrock
+
+- **Troškovi:** GPU instance (~$0.53–$1.21/h) zahtevaju eksplicitno upravljanje start/stop ciklusom (npr. Lambda + CloudWatch Events za auto-start/stop) da bi se izbeglo plaćanje 24/7. Bedrock se naplaćuje isključivo po broju tokena (pay-per-use), bez troška u periodima neaktivnosti — pogodnije za projekat koji se koristi povremeno.
+- **Operativna kompleksnost:** Self-hosted pristup zahteva upravljanje GPU driverima, serving softverom (vLLM/TGI), skaliranjem i dostupnošću — dodatni sloj infrastrukture koji nije centralna tema istraživanja ovog rada.
+- **Vreme implementacije:** Managed pristup preko Bedrock-a omogućava fokus na RAG pipeline (chunking, embedding, retrieval) i komparativnu analizu dva RAG rešenja (Knowledge Base vs. Custom OpenSearch), umesto na operativne aspekte serving infrastrukture.
+- **Reproducibilnost:** Bedrock ne zahteva GPU kvote niti regionalnu dostupnost specifičnih instanci, što pojednostavljuje reprodukciju eksperimenta.
+
+Self-hosted LLM pristup (vLLM na GPU EC2 instanci) ostaje relevantan pravac za dalja istraživanja — posebno u kontekstu analize troškova pri velikom obimu saobraćaja, gde bi self-hosting na duže staze mogao biti isplativiji od pay-per-token modela, kao i u kontekstu potpune kontrole nad modelom (fine-tuning, privatnost podataka bez izlaska iz sopstvene infrastrukture).
+
+---
+
 ## 10. Sigurnosna konfiguracija
 
 - **S3 bucket:** Sav javni pristup blokiran, server-side enkripcija
